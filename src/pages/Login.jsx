@@ -1,28 +1,40 @@
-import { Tabs } from "antd";
+import { Tabs, Divider } from "antd";
 import SignIn from "../features/SignIn";
 import SignUp from "../features/SignUp";
+import styles from "./Login.module.css";
 
 const items = [
   {
     key: "1",
-    label: "Sign in",
-    children: <SignIn />,
+    label: "Sign up",
+    children: <SignUp />,
   },
   {
     key: "2",
-    label: "Sign up",
-    children: <SignUp />,
+    label: "Sign in",
+    children: <SignIn />,
   },
 ];
 
 function Login() {
   return (
-    <Tabs
-      centered={true}
-      defaultActiveKey="1"
-      items={items}
-      style={{ maxWidth: 400, marginInline: "auto" }}
-    />
+    <div className={styles.container}>
+      <div className={styles.banner}>
+        <img src="./pokemon.svg" />
+        <Divider
+          className={styles.divider}
+          type="vertical"
+          orientation="center"
+        />
+        <img src="./clicker.svg" />
+      </div>
+      <Tabs
+        className={styles.tabs}
+        centered={true}
+        defaultActiveKey="1"
+        items={items}
+      />
+    </div>
   );
 }
 

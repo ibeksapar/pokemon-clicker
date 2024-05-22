@@ -1,7 +1,20 @@
 import { Button, Form, Input } from "antd";
+import styles from "../pages/Login.module.css";
 
-const onFinish = (values) => {
-  console.log("Success:", values);
+const onFinish = async (values) => {
+  const res = await fetch("http://localhost:9999/user/login", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: {
+      username: values.login,
+      password: values.password,
+    },
+  });
+
+  const data = await res.json();
+  console.log("Success login:", data);
 };
 const onFinishFailed = (errorInfo) => {
   console.log("Failed:", errorInfo);
@@ -13,12 +26,6 @@ function SignIn() {
       layout="vertical"
       labelAlign="left"
       name="basic"
-      style={{
-        padding: 24,
-        borderRadius: 16,
-        backgroundColor: "#FFF",
-        boxShadow: "0px 0px 16px 0px rgba(58, 58, 58, 0.1)",
-      }}
       initialValues={{
         remember: true,
       }}
@@ -36,7 +43,7 @@ function SignIn() {
           },
         ]}
       >
-        <Input placeholder="Input login" style={{ borderRadius: 2 }} />
+        <Input placeholder="Input login" className={styles.input} />
       </Form.Item>
 
       <Form.Item
@@ -49,22 +56,11 @@ function SignIn() {
           },
         ]}
       >
-        <Input.Password
-          placeholder="Input password"
-          style={{ borderRadius: 2 }}
-        />
+        <Input.Password placeholder="Input password" className={styles.input} />
       </Form.Item>
 
-      <Form.Item
-        style={{
-          marginBottom: 0,
-        }}
-      >
-        <Button
-          type="primary"
-          htmlType="submit"
-          style={{ width: "100%", backgroundColor: "#365FAC", borderRadius: 2 }}
-        >
+      <Form.Item className={styles.formItem}>
+        <Button type="primary" htmlType="submit" className={styles.btn}>
           Sign in
         </Button>
       </Form.Item>
