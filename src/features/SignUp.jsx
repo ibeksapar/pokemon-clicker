@@ -1,9 +1,11 @@
 import { Button, Form, Input } from "antd";
 import styles from "../pages/Login.module.css";
+import { API_URL } from "../constants";
 
 const onFinish = async (values) => {
+  console.log(values);
   try {
-    const res = await fetch("http://localhost:9999/user/register", {
+    const res = await fetch(`${API_URL}/user/register`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -11,6 +13,11 @@ const onFinish = async (values) => {
       body: JSON.stringify({
         username: values.login,
         password: values.password,
+        firstname: "John",
+        lastname: "Smith",
+        email: "John@mail.com",
+        avatar:
+          "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/304.jpg",
       }),
     });
 
@@ -29,7 +36,7 @@ function SignUp() {
     <Form
       layout="vertical"
       labelAlign="left"
-      name="basic"
+      name="sign-up"
       initialValues={{
         remember: true,
       }}
@@ -39,7 +46,7 @@ function SignUp() {
     >
       <Form.Item
         label="Login"
-        name="Login"
+        name="login"
         rules={[
           {
             required: true,
@@ -47,7 +54,11 @@ function SignUp() {
           },
         ]}
       >
-        <Input placeholder="Input login" className={styles.input} />
+        <Input
+          autoComplete="on"
+          placeholder="Input login"
+          className={styles.input}
+        />
       </Form.Item>
 
       <Form.Item
@@ -60,7 +71,11 @@ function SignUp() {
           },
         ]}
       >
-        <Input.Password placeholder="Input password" className={styles.input} />
+        <Input.Password
+          autoComplete="on"
+          placeholder="Input password"
+          className={styles.input}
+        />
       </Form.Item>
 
       <Form.Item
@@ -86,6 +101,7 @@ function SignUp() {
         ]}
       >
         <Input.Password
+          autoComplete="on"
           placeholder="Input password again"
           className={styles.input}
         />

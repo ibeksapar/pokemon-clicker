@@ -1,16 +1,18 @@
 import { Button, Form, Input } from "antd";
 import styles from "../pages/Login.module.css";
+import { API_URL } from "../constants";
 
 const onFinish = async (values) => {
-  const res = await fetch("http://localhost:9999/user/login", {
+  console.log(values);
+  const res = await fetch(`${API_URL}/user/login`, {
     method: "post",
     headers: {
       "Content-Type": "application/json",
     },
-    body: {
+    body: JSON.stringify({
       username: values.login,
       password: values.password,
-    },
+    }),
   });
 
   const data = await res.json();
@@ -25,7 +27,7 @@ function SignIn() {
     <Form
       layout="vertical"
       labelAlign="left"
-      name="basic"
+      name="sign-in"
       initialValues={{
         remember: true,
       }}
@@ -35,7 +37,7 @@ function SignIn() {
     >
       <Form.Item
         label="Login"
-        name="Login"
+        name="login"
         rules={[
           {
             required: true,
@@ -43,7 +45,11 @@ function SignIn() {
           },
         ]}
       >
-        <Input placeholder="Input login" className={styles.input} />
+        <Input
+          autoComplete="on"
+          placeholder="Input login"
+          className={styles.input}
+        />
       </Form.Item>
 
       <Form.Item
@@ -56,7 +62,11 @@ function SignIn() {
           },
         ]}
       >
-        <Input.Password placeholder="Input password" className={styles.input} />
+        <Input.Password
+          autoComplete="on"
+          placeholder="Input password"
+          className={styles.input}
+        />
       </Form.Item>
 
       <Form.Item className={styles.formItem}>
